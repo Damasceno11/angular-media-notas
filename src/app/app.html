@@ -1,0 +1,13 @@
+<mat-toolbar color="primary" class="barra-titulo">
+  <mat-icon class="icone-titulo">school</mat-icon>
+  <span class="texto-titulo">{{ title() }}</span>
+</mat-toolbar>
+
+<main class="conteudo-principal">
+  <router-outlet></router-outlet>
+  <app-sistema-notas></app-sistema-notas>
+</main>
+
+<footer class="rodape">
+  <p>© 2025 Desenvolvido com Angular {{ versaoAngular() }}</p>
+</footer>

@@ -1,0 +1,121 @@
+<div class="container">
+  <mat-card class="card-formulario mt-elevation-z8">
+    <mat-card-header class="header-colorido">
+      <mat-card-title><mat-icon>assignment</mat-icon> Cadastro de Notas</mat-card-title>
+      <mat-card-subtitle
+        ><mat-icon>info</mat-icon> Informe o nome e as duas notas do aluno</mat-card-subtitle
+      >
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="formularioAluno" (ngSubmit)="adicionarAluno()" class="formulario">
+        <mat-form-field appearance="outline" class="campo-completo">
+          <mat-label>Nome do Aluno</mat-label>
+          <input matInput formControlName="nome" placeholder="Digite o nome completo" />
+          <mat-error *ngIf="formularioAluno.get('nome')?.hasError('required')">
+            Nome é obrigatório
+          </mat-error>
+          <mat-error *ngIf="formularioAluno.get('nome')?.hasError('minlength')">
+            Nome deve ter pelo menos 3 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <div class="container-notas">
+          <mat-form-field appearance="outline" class="campo-nota">
+            <mat-label>Nota 1</mat-label>
+            <input matInput type="number" formControlName="nota1" min="0" max="10" step="0.1" />
+            <mat-error *ngIf="formularioAluno.get('nota1')?.hasError('required')">
+              Nota 1 é obrigatória
+            </mat-error>
+            <mat-error
+              *ngIf="
+                formularioAluno.get('nota1')?.hasError('min') ||
+                formularioAluno.get('nota1')?.hasError('max')
+              "
+            >
+              Nota deve ser entre 0 e 10
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="campo-nota">
+            <mat-label>Nota 2</mat-label>
+            <input matInput type="number" formControlName="nota2" min="0" max="10" step="0.1" />
+            <mat-error *ngIf="formularioAluno.get('nota2')?.hasError('required')">
+              Nota 2 é obrigatória
+            </mat-error>
+            <mat-error
+              *ngIf="
+                formularioAluno.get('nota2')?.hasError('min') ||
+                formularioAluno.get('nota2')?.hasError('max')
+              "
+            >
+              Nota deve ser entre 0 e 10
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!formularioAluno.valid"
+          class="botao-adicionar"
+        >
+          <mat-icon>add</mat-icon>
+          Adicionar Aluno
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card-tabela" *ngIf="alunos.length > 0">
+    <mat-card-header>
+      <mat-card-title>Lista de Alunos</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <table mat-table [dataSource]="alunos" class="tabela">
+        <!-- Coluna Nome -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef>Nome do Aluno</th>
+          <td mat-cell *matCellDef="let aluno">{{ aluno.nome }}</td>
+        </ng-container>
+
+        <!-- Coluna Nota 1 -->
+        <ng-container matColumnDef="nota1">
+          <th mat-header-cell *matHeaderCellDef>Nota 1</th>
+          <td mat-cell *matCellDef="let aluno">{{ aluno.nota1 }}</td>
+        </ng-container>
+
+        <!-- Coluna Nota 2 -->
+        <ng-container matColumnDef="nota2">
+          <th mat-header-cell *matHeaderCellDef>Nota 2</th>
+          <td mat-cell *matCellDef="let aluno">{{ aluno.nota2 }}</td>
+        </ng-container>
+
+        <!-- Coluna Média -->
+        <ng-container matColumnDef="media">
+          <th mat-header-cell *matHeaderCellDef>Média</th>
+          <td mat-cell *matCellDef="let aluno">
+            {{ aluno.nota1 | media : aluno.nota2 | number : '1.1-1' }}
+          </td>
+        </ng-container>
+
+        <!-- Coluna Situação -->
+        <ng-container matColumnDef="situacao">
+          <th mat-header-cell *matHeaderCellDef>Situação</th>
+          <td
+            mat-cell
+            *matCellDef="let aluno"
+            [class]="obterCorSituacao(aluno.nota1 | media : aluno.nota2)"
+          >
+            {{ obterSituacao(aluno.nota1 | media : aluno.nota2) }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunasExibidas"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
