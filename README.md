@@ -147,12 +147,6 @@ Encontrou um bug? [Abra uma issue](https://github.com/seu-usuario/sistema-notas-
 - **Material Design**: UI consistente e acessível
 - **CSS Moderno**: Gradientes, animações e responsividade
 
-## 📊 Estatísticas
-
-![Code Size](https://img.shields.io/github/languages/code-size/seu-usuario/sistema-notas-escolares?style=flat-square)
-![Last Commit](https://img.shields.io/github/last-commit/seu-usuario/sistema-notas-escolares?style=flat-square)
-![Issues](https://img.shields.io/github/issues/seu-usuario/sistema-notas-escolares?style=flat-square)
-
 ---
 
 ## 👨‍💻 Desenvolvido por
